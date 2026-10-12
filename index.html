@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ISTS College Chatbot</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e8f0ff, #f8f9ff);
+        }
+
+        .header {
+            background: #173b7a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .header p {
+            margin: 8px 0 0;
+        }
+
+        .chat-container {
+            width: 90%;
+            max-width: 700px;
+            height: 650px;
+            margin: 30px auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: #2855a6;
+            color: white;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        #chat {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f5f7fb;
+        }
+
+        .message {
+            margin: 12px 0;
+            padding: 12px 15px;
+            border-radius: 12px;
+            max-width: 80%;
+            line-height: 1.5;
+            white-space: pre-line;
+        }
+
+        .bot {
+            background: #e1ebff;
+            color: #172b4d;
+            margin-right: auto;
+        }
+
+        .user {
+            background: #2855a6;
+            color: white;
+            margin-left: auto;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #ddd;
+            background: white;
+        }
+
+        #userInput {
+            flex: 1;
+            padding: 13px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        button {
+            margin-left: 10px;
+            padding: 13px 20px;
+            border: none;
+            background: #2855a6;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #173b7a;
+        }
+
+        .quick-buttons {
+            padding: 10px 15px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+
+        .quick-buttons button {
+            margin: 4px;
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+
+        a {
+            color: #174ea6;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>🎓 ISTS College Chatbot</h1>
+
+        <p>
+            International School of Technology and Sciences for Women
+        </p>
+
+    </div>
+
+
+    <div class="chat-container">
+
+        <div class="chat-header">
+            🤖 ISTS Student Assistance Chatbot
+        </div>
+
+
+        <div id="chat">
+
+            <div class="message bot">
+
+                <b>Bot:</b>
+
+                Hello! 👋
+
+                Welcome to ISTS College Chatbot.
+
+                I can help you with:
+
+                • College Information
+                • B.Tech Courses
+                • CSE
+                • Admissions
+                • Academics
+                • Campus Facilities
+                • Hostel
+                • Placements
+                • Events
+                • Student Services
+                • Contact Information
+
+                Ask me a question!
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-buttons">
+
+            <button onclick="quickQuestion('What courses are available at ISTS?')">
+                Courses
+            </button>
+
+            <button onclick="quickQuestion('Tell me about CSE')">
+                CSE
+            </button>
+
+            <button onclick="quickQuestion('Tell me about hostel facilities')">
+                Hostel
+            </button>
+
+            <button onclick="quickQuestion('Tell me about placements')">
+                Placements
+            </button>
+
+            <button onclick="quickQuestion('What facilities are available?')">
+                Facilities
+            </button>
+
+        </div>
+
+
+        <div class="input-area">
+
+            <input
+                type="text"
+                id="userInput"
+                placeholder="Type your question..."
+                onkeypress="handleEnter(event)"
+            >
+
+            <button onclick="sendMessage()">
+                Send
+            </button>
+
+        </div>
+
+    </div>
+
+
+<script>
+
+
+/* ---------------------------------------
+   SEND MESSAGE
+--------------------------------------- */
+
+function sendMessage() {
+
+    let input = document.getElementById("userInput");
+
+    let message = input.value.trim();
+
+    if (message === "") {
+        return;
+    }
+
+    addMessage(message, "user");
+
+    let response = getBotResponse(message);
+
+    setTimeout(function() {
+
+        addMessage(response, "bot");
+
+    }, 300);
+
+    input.value = "";
+
+}
+
+
+/* ---------------------------------------
+   QUICK QUESTIONS
+--------------------------------------- */
+
+function quickQuestion(question) {
+
+    document.getElementById("userInput").value = question;
+
+    sendMessage();
+
+}
+
+
+/* ---------------------------------------
+   ENTER KEY
+--------------------------------------- */
+
+function handleEnter(event) {
+
+    if (event.key === "Enter") {
+
+        sendMessage();
+
+    }
+
+}
+
+
+/* ---------------------------------------
+   ADD MESSAGE
+--------------------------------------- */
+
+function addMessage(message, type) {
+
+    let chat = document.getElementById("chat");
+
+    let div = document.createElement("div");
+
+    div.classList.add("message");
+
+    div.classList.add(type);
+
+    if (type === "user") {
+
+        div.innerHTML = "<b>You:</b><br>" + message;
+
+    } else {
+
+        div.innerHTML = "<b>Bot:</b><br>" + message;
+
+    }
+
+    chat.appendChild(div);
+
+    chat.scrollTop = chat.scrollHeight;
+
+}
+
+
+/* ---------------------------------------
+   CHATBOT RESPONSE
+--------------------------------------- */
+
+function getBotResponse(input) {
+
+    let message = input.toLowerCase();
+
+
+    /* GREETING */
+
+    if (
+        message.includes("hello") ||
+        message.includes("hi") ||
+        message.includes("hey")
+    ) {
+
+        return `
+        Hello! 👋<br><br>
+        Welcome to <b>ISTS College</b>.<br>
+        How can I help you?
+        `;
+
+    }
+
+
+    /* COLLEGE INFORMATION */
+
+    if (
+        message.includes("college") &&
+        (
+            message.includes("name") ||
+            message.includes("about")
+        )
+    ) {
+
+        return `
+        <b>College Name:</b><br>
+        International School of Technology and Sciences for Women<br><br>
+
+        <b>Short Name:</b> ISTS<br><br>
+
+        <b>Location:</b> Rajahmundry, Andhra Pradesh, India
+        `;
+
+    }
+
+
+    /* LOCATION */
+
+    if (
+        message.includes("location") ||
+        message.includes("located") ||
+        message.includes("where is")
+    ) {
+
+        return `
+        📍 <b>ISTS is located at:</b><br><br>
+
+        Rajahmundry, Andhra Pradesh, India.
+        `;
+
+    }
+
+
+    /* COURSES */
+
+    if (
+        message.includes("courses") ||
+        message.includes("b.tech courses") ||
+        message.includes("programs")
+    ) {
+
+        return `
+        <b>🎓 B.Tech Courses at ISTS:</b><br><br>
+
+        1. Computer Science and Engineering (CSE)<br>
+        2. CSE - Artificial Intelligence<br>
+        3. Artificial Intelligence and Machine Learning (AI & ML)<br>
+        4. CSE - Data Science<br>
+        5. CSE - Cyber Security<br>
+        6. Electronics and Communication Engineering (ECE)<br>
+        7. ECE - VLSI Design and Technology<br>
+        8. ECE - Advanced Communication Technology<br>
+        9. Agricultural Engineering<br><br>
+
+        <b>Other Programs:</b><br>
+        M.Tech, MBA, MCA, BCA, BBA<br><br>
+
+        <b>Diploma Programs:</b><br>
+        Diploma in CSE<br>
+        Diploma in CSE - Artificial Intelligence<br>
+        Diploma in ECE
+        `;
+
+    }
+
+
+    /* CSE */
+
+    if (
+        message.includes("cse") ||
+        message.includes("computer science")
+    ) {
+
+        return `
+        <b>💻 Computer Science and Engineering (CSE)</b><br><br>
+
+        <b>Degree:</b> B.Tech<br>
+        <b>Abbreviation:</b> CSE<br><br>
+
+        <b>Major areas include:</b><br>
+
+        • Programming<br>
+        • Data Structures<br>
+        • Algorithms<br>
+        • Database Management Systems<br>
+        • Operating Systems<br>
+        • Computer Networks<br>
+        • Web Development<br>
+        • Software Engineering<br>
+        • Artificial Intelligence<br>
+        • Machine Learning<br><br>
+
+        <b>CSE Specializations:</b><br>
+
+        • Artificial Intelligence<br>
+        • Data Science<br>
+        • Cyber Security
+        `;
+
+    }
+
+
+    /* AI */
+
+    if (
+        message.includes("artificial intelligence") ||
+        message.includes("ai")
+    ) {
+
+        return `
+        Yes. 🤖 ISTS offers programs related to
+        <b>Artificial Intelligence</b>.
+
+        These include:
+
+        • CSE - Artificial Intelligence
+        • Artificial Intelligence and Machine Learning (AI & ML)
+
+        AI is also associated with CSE as a major area.
+        `;
+
+    }
+
+
+    /* DATA SCIENCE */
+
+    if (
+        message.includes("data science")
+    ) {
+
+        return `
+        📊 Yes. ISTS offers:
+
+        <b>Computer Science and Engineering - Data Science</b>
+
+        Data Science is also listed as a CSE specialization.
+        `;
+
+    }
+
+
+    /* CYBER SECURITY */
+
+    if (
+        message.includes("cyber") ||
+        message.includes("cyber security")
+    ) {
+
+        return `
+        🔐 Yes. ISTS offers:
+
+        <b>Computer Science and Engineering - Cyber Security</b>
+
+        Cyber Security is also listed as a CSE specialization.
+        `;
+
+    }
+
+
+    /* ADMISSIONS */
+
+    if (
+        message.includes("admission") ||
+        message.includes("apply")
+    ) {
+
+        return `
+        📝 <b>Admissions</b><br><br>
+
+        ISTS offers admissions for undergraduate
+        and postgraduate programs.
+
+        B.Tech admissions follow the applicable
+        admission procedure.
+
+        Eligibility requirements can vary by course.
+
+        For current admission notifications,
+        eligibility, application procedure and
+        important dates, please check the official
+        ISTS website.
+        `;
+
+    }
+
+
+    /* ACADEMICS */
+
+    if (
+        message.includes("academic") ||
+        message.includes("syllabus") ||
+        message.includes("timetable") ||
+        message.includes("exam") ||
+        message.includes("results")
+    ) {
+
+        return `
+        📚 <b>Academic Information</b><br><br>
+
+        Academic information may include:
+
+        • Departments
+        • Courses
+        • Syllabus
+        • Academic Calendar
+        • Examinations
+        • Results
+        • Timetables
+        • Academic Regulations
+        • Student Academic Information
+        `;
+
+    }
+
+
+    /* FACILITIES */
+
+    if (
+        message.includes("facility") ||
+        message.includes("facilities") ||
+        message.includes("campus")
+    ) {
+
+        return `
+        🏫 <b>Campus Facilities</b><br><br>
+
+        ISTS chatbot information includes:
+
+        • Classrooms
+        • Laboratories
+        • Computer Labs
+        • Library
+        • Hostel
+        • Transportation
+        • Sports
+        • Cafeteria
+        • Internet / Wi-Fi
+        • Student Facilities
+        `;
+
+    }
+
+
+    /* LIBRARY */
+
+    if (
+        message.includes("library")
+    ) {
+
+        return `
+        📖 The ISTS campus facilities information
+        includes a <b>Library</b>.
+        `;
+
+    }
+
+
+    /* HOSTEL */
+
+    if (
+        message.includes("hostel")
+    ) {
+
+        return `
+        🏠 <b>Hostel Information</b><br><br>
+
+        The chatbot can provide information about:
+
+        • Hostel availability
+        • Hostel facilities
+        • Hostel application
+        • Hostel rules
+        • Hostel fees
+        • Food
+
+        <br>
+        ⚠️ Hostel fees, rules, room details and
+        availability can change. Please check the
+        latest official ISTS information for current details.
+        `;
+
+    }
+
+
+    /* TRANSPORT */
+
+    if (
+        message.includes("transport") ||
+        message.includes("transportation") ||
+        message.includes("bus")
+    ) {
+
+        return `
+        🚌 Transportation is included among
+        the campus facilities provided by ISTS.
+
+        For current routes, timings and availability,
+        please check the latest official information.
+        `;
+
+    }
+
+
+    /* PLACEMENTS */
+
+    if (
+        message.includes("placement") ||
+        message.includes("job") ||
+        message.includes("recruitment")
+    ) {
+
+        return `
+        💼 <b>Placement Information</b><br><br>
+
+        Placement-related topics include:
+
+        • Placement Cell
+        • Campus Recruitment
+        • Placement Training
+        • Career Guidance
+        • Internships
+        • Recruiters
+        • Placement Statistics
+        • Placement Process
+
+        <br>
+        For current placement statistics and
+        recruiter information, please check the
+        latest official ISTS information.
+        `;
+
+    }
+
+
+    /* INTERNSHIP */
+
+    if (
+        message.includes("internship")
+    ) {
+
+        return `
+        💼 Internships are included among the
+        placement-related topics of the ISTS chatbot.
+
+        For current internship opportunities,
+        please check the latest official information.
+        `;
+
+    }
+
+
+    /* EVENTS */
+
+    if (
+        message.includes("event") ||
+        message.includes("activities") ||
+        message.includes("workshop") ||
+        message.includes("seminar")
+    ) {
+
+        return `
+        🎉 <b>College Events and Activities</b><br><br>
+
+        ISTS may conduct:
+
+        • Technical Events
+        • Cultural Events
+        • Workshops
+        • Seminars
+        • Guest Lectures
+        • Student Clubs
+        • Competitions
+        • College Celebrations
+        `;
+
+    }
+
+
+    /* STUDENT SERVICES */
+
+    if (
+        message.includes("student service") ||
+        message.includes("student services") ||
+        message.includes("student login") ||
+        message.includes("certificate") ||
+        message.includes("notice")
+    ) {
+
+        return `
+        👨‍🎓 <b>Student Services</b><br><br>
+
+        • Student Login
+        • Examination Information
+        • Results
+        • Timetable
+        • Academic Calendar
+        • Notices
+        • Certificates
+        • Student Activities
+        `;
+
+    }
+
+
+    /* CONTACT */
+
+    if (
+        message.includes("contact") ||
+        message.includes("phone") ||
+        message.includes("email") ||
+        message.includes("address")
+    ) {
+
+        return `
+        📞 <b>Contact Information</b><br><br>
+
+        The chatbot provides information about:
+
+        • College Address
+        • Phone Number
+        • Email Address
+        • Admissions Contact
+        • Administration Contact
+        • College Location<br><br>
+
+        <b>Official Website:</b><br>
+
+        <a href="https://ists.ac.in/"
+           target="_blank">
+           https://ists.ac.in/
+        </a>
+        `;
+
+    }
+
+
+    /* WEBSITE */
+
+    if (
+        message.includes("website") ||
+        message.includes("official site") ||
+        message.includes("official website")
+    ) {
+
+        return `
+        🌐 <b>Official ISTS Website:</b><br><br>
+
+        <a href="https://ists.ac.in/"
+           target="_blank">
+           Visit ISTS Official Website
+        </a>
+        `;
+
+    }
+
+
+    /* THANK YOU */
+
+    if (
+        message.includes("thank") ||
+        message.includes("thanks")
+    ) {
+
+        return `
+        You're welcome! 😊<br><br>
+        Feel free to ask me anything about ISTS.
+        `;
+
+    }
+
+
+    /* BYE */
+
+    if (
+        message.includes("bye") ||
+        message.includes("goodbye")
+    ) {
+
+        return `
+        Goodbye! 👋<br><br>
+        Have a great day!
+        `;
+
+    }
+
+
+    /* DEFAULT RESPONSE */
+
+    return `
+    🤔 Sorry, I don't have that information
+    in my current ISTS knowledge base.
+
+    You can ask me about:
+
+    • Courses
+    • CSE
+    • Admissions
+    • Academics
+    • Facilities
+    • Hostel
+    • Placements
+    • Events
+    • Student Services
+    • Contact Information
+
+    You can also check the official website:
+    <br><br>
+
+    <a href="https://ists.ac.in/"
+       target="_blank">
+       https://ists.ac.in/
+    </a>
+    `;
+
+}
+
+</script>
+
+</body>
+</html>
