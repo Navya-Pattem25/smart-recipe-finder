@@ -2,874 +2,2055 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>ISTS College Chatbot</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
+<title>Foodly | Recipe Finder</title>
 
-        * {
-            box-sizing: border-box;
-        }
+<style>
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #e8f0ff, #f8f9ff);
-        }
+/* =========================
+   RESET
+========================= */
 
-        .header {
-            background: #173b7a;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .header h1 {
-            margin: 0;
-            font-size: 28px;
-        }
+body {
 
-        .header p {
-            margin: 8px 0 0;
-        }
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
 
-        .chat-container {
-            width: 90%;
-            max-width: 700px;
-            height: 650px;
-            margin: 30px auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+    min-height: 100vh;
 
-        .chat-header {
-            background: #2855a6;
-            color: white;
-            padding: 15px;
-            font-size: 20px;
-            font-weight: bold;
-        }
+    color: white;
 
-        #chat {
-            flex: 1;
-            padding: 20px;
-            overflow-y: auto;
-            background: #f5f7fb;
-        }
+    background:
+        linear-gradient(
+            135deg,
+            #120806,
+            #24100b,
+            #150907
+        );
 
-        .message {
-            margin: 12px 0;
-            padding: 12px 15px;
-            border-radius: 12px;
-            max-width: 80%;
-            line-height: 1.5;
-            white-space: pre-line;
-        }
+    overflow-x: hidden;
+}
 
-        .bot {
-            background: #e1ebff;
-            color: #172b4d;
-            margin-right: auto;
-        }
 
-        .user {
-            background: #2855a6;
-            color: white;
-            margin-left: auto;
-        }
+/* =========================
+   ANIMATED BACKGROUND
+========================= */
 
-        .input-area {
-            display: flex;
-            padding: 15px;
-            border-top: 1px solid #ddd;
-            background: white;
-        }
+.background {
 
-        #userInput {
-            flex: 1;
-            padding: 13px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 15px;
-            outline: none;
-        }
+    position: fixed;
 
-        button {
-            margin-left: 10px;
-            padding: 13px 20px;
-            border: none;
-            background: #2855a6;
-            color: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-        }
+    inset: 0;
 
-        button:hover {
-            background: #173b7a;
-        }
+    overflow: hidden;
 
-        .quick-buttons {
-            padding: 10px 15px;
-            background: white;
-            border-top: 1px solid #ddd;
-        }
+    z-index: -1;
+}
 
-        .quick-buttons button {
-            margin: 4px;
-            padding: 8px 12px;
-            font-size: 13px;
-        }
 
-        a {
-            color: #174ea6;
-            font-weight: bold;
-        }
+.blob {
 
-    </style>
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(90px);
+
+    opacity: 0.3;
+
+    animation:
+        moveBlob 12s infinite alternate ease-in-out;
+}
+
+
+.blob1 {
+
+    width: 450px;
+    height: 450px;
+
+    background: #ff6b35;
+
+    top: -180px;
+    left: -120px;
+}
+
+
+.blob2 {
+
+    width: 400px;
+    height: 400px;
+
+    background: #ffb347;
+
+    right: -120px;
+    top: 25%;
+
+    animation-delay: 3s;
+}
+
+
+.blob3 {
+
+    width: 350px;
+    height: 350px;
+
+    background: #d94f04;
+
+    bottom: -150px;
+    left: 35%;
+
+    animation-delay: 5s;
+}
+
+
+@keyframes moveBlob {
+
+    0% {
+        transform:
+            translate(0, 0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate(70px, -50px)
+            scale(1.15);
+    }
+
+    100% {
+        transform:
+            translate(-40px, 60px)
+            scale(0.9);
+    }
+}
+
+
+/* =========================
+   FLOATING FOOD
+========================= */
+
+.food {
+
+    position: absolute;
+
+    font-size: 42px;
+
+    opacity: 0.12;
+
+    animation:
+        floatFood 10s infinite ease-in-out;
+}
+
+
+.food1 {
+    left: 8%;
+    top: 20%;
+}
+
+.food2 {
+    left: 85%;
+    top: 15%;
+    animation-delay: 2s;
+}
+
+.food3 {
+    left: 15%;
+    top: 75%;
+    animation-delay: 4s;
+}
+
+.food4 {
+    left: 75%;
+    top: 70%;
+    animation-delay: 6s;
+}
+
+.food5 {
+    left: 45%;
+    top: 12%;
+    animation-delay: 3s;
+}
+
+.food6 {
+    left: 55%;
+    top: 85%;
+    animation-delay: 5s;
+}
+
+
+@keyframes floatFood {
+
+    0% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+    50% {
+        transform:
+            translateY(-40px)
+            rotate(15deg);
+    }
+
+    100% {
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+}
+
+
+/* =========================
+   HEADER
+========================= */
+
+header {
+
+    text-align: center;
+
+    padding:
+        75px
+        20px
+        40px;
+}
+
+
+.logo {
+
+    font-size: 50px;
+
+    font-weight: 800;
+
+    letter-spacing: -2px;
+}
+
+
+.logo span {
+
+    color: #ff9d4d;
+}
+
+
+.subtitle {
+
+    color: #d6d6d6;
+
+    font-size: 17px;
+
+    margin-top: 10px;
+
+    margin-bottom: 35px;
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-container {
+
+    max-width: 700px;
+
+    margin: auto;
+
+    display: flex;
+
+    padding: 7px;
+
+    background:
+        rgba(255,255,255,0.1);
+
+    backdrop-filter:
+        blur(15px);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.18);
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 15px 50px
+        rgba(0,0,0,0.25);
+}
+
+
+.search-container input {
+
+    flex: 1;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: white;
+
+    padding:
+        15px
+        18px;
+
+    font-size: 16px;
+}
+
+
+.search-container input::placeholder {
+
+    color: #c8c8c8;
+}
+
+
+.search-container button {
+
+    border: none;
+
+    padding:
+        0 30px;
+
+    border-radius: 13px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff7438,
+            #ffb347
+        );
+
+    color: white;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+
+.search-container button:hover {
+
+    transform: scale(1.04);
+
+    box-shadow:
+        0 8px 25px
+        rgba(255,140,60,0.35);
+}
+
+
+/* =========================
+   MAIN
+========================= */
+
+.container {
+
+    max-width: 1150px;
+
+    margin: auto;
+
+    padding:
+        20px;
+}
+
+
+#status {
+
+    text-align: center;
+
+    color: #ddd;
+
+    margin:
+        10px 0
+        25px;
+}
+
+
+/* =========================
+   SECTION
+========================= */
+
+.section-title {
+
+    font-size: 23px;
+
+    margin:
+        30px 0
+        18px;
+}
+
+
+/* =========================
+   RESULTS
+========================= */
+
+.results {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(230px, 1fr)
+        );
+
+    gap: 22px;
+}
+
+
+.card {
+
+    background:
+        rgba(255,255,255,0.1);
+
+    backdrop-filter:
+        blur(15px);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.15);
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    transition:
+        0.3s;
+
+    animation:
+        appear 0.5s ease;
+}
+
+
+.card:hover {
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        0 20px 45px
+        rgba(0,0,0,0.35);
+}
+
+
+.card img {
+
+    width: 100%;
+
+    height: 190px;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+
+.card-content {
+
+    padding: 17px;
+}
+
+
+.card h3 {
+
+    font-size: 18px;
+
+    margin:
+        8px 0;
+}
+
+
+.card p {
+
+    color: #ccc;
+
+    font-size: 13px;
+}
+
+
+.source {
+
+    display: inline-block;
+
+    padding:
+        5px
+        10px;
+
+    border-radius: 20px;
+
+    background:
+        rgba(255,160,80,0.15);
+
+    color: #ffb36b;
+
+    font-size: 12px;
+}
+
+
+@keyframes appear {
+
+    from {
+
+        opacity: 0;
+
+        transform:
+            translateY(20px);
+    }
+
+    to {
+
+        opacity: 1;
+
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =========================
+   SUGGESTIONS
+========================= */
+
+.suggestions {
+
+    max-width: 700px;
+
+    margin:
+        0 auto
+        30px;
+}
+
+
+.suggestion {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        16px
+        18px;
+
+    margin-bottom: 10px;
+
+    border-radius: 12px;
+
+    background:
+        rgba(255,255,255,0.1);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.15);
+
+    cursor: pointer;
+
+    transition:
+        0.25s;
+}
+
+
+.suggestion:hover {
+
+    background:
+        rgba(255,255,255,0.18);
+
+    transform:
+        translateX(5px);
+}
+
+
+.suggestion-name {
+
+    font-weight: 600;
+}
+
+
+.suggestion-source {
+
+    color: #ffb36b;
+
+    font-size: 12px;
+
+    margin-top: 4px;
+}
+
+
+/* =========================
+   LOADER
+========================= */
+
+.loader {
+
+    width: 38px;
+
+    height: 38px;
+
+    border:
+        4px solid
+        rgba(255,255,255,0.2);
+
+    border-top:
+        4px solid
+        #ff9d4d;
+
+    border-radius: 50%;
+
+    animation:
+        spin 1s linear infinite;
+
+    margin:
+        20px auto;
+}
+
+
+@keyframes spin {
+
+    to {
+        transform:
+            rotate(360deg);
+    }
+}
+
+
+/* =========================
+   RECIPE DETAILS
+========================= */
+
+.recipe {
+
+    display: none;
+
+    margin-top: 45px;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    backdrop-filter:
+        blur(18px);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.15);
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    animation:
+        appear 0.5s ease;
+}
+
+
+.recipe-header {
+
+    position: relative;
+
+    height: 420px;
+}
+
+
+.recipe-header img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.recipe-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: flex-end;
+
+    padding: 40px;
+
+    background:
+        linear-gradient(
+            transparent 20%,
+            rgba(0,0,0,0.9)
+        );
+}
+
+
+.recipe-overlay h2 {
+
+    font-size: 40px;
+
+    margin-bottom: 10px;
+}
+
+
+.recipe-overlay p {
+
+    color: #ddd;
+}
+
+
+.recipe-content {
+
+    padding:
+        35px;
+}
+
+
+.info {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            1fr
+        );
+
+    gap: 15px;
+
+    margin-bottom: 35px;
+}
+
+
+.info-box {
+
+    padding: 18px;
+
+    border-radius: 13px;
+
+    background:
+        rgba(255,255,255,0.07);
+
+    border:
+        1px solid
+        rgba(255,255,255,0.1);
+}
+
+
+.info-box small {
+
+    display: block;
+
+    color: #aaa;
+
+    margin-bottom: 5px;
+}
+
+
+.ingredients {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(200px, 1fr)
+        );
+
+    gap: 10px;
+
+    margin:
+        20px 0
+        35px;
+}
+
+
+.ingredient {
+
+    padding: 14px;
+
+    border-radius: 10px;
+
+    background:
+        rgba(255,255,255,0.07);
+}
+
+
+.ingredient span {
+
+    display: block;
+
+    color: #ffb36b;
+
+    margin-top: 5px;
+}
+
+
+.instructions {
+
+    padding: 25px;
+
+    line-height: 1.8;
+
+    color: #ddd;
+
+    background:
+        rgba(255,255,255,0.06);
+
+    border-left:
+        3px solid
+        #ff8c42;
+
+    border-radius: 12px;
+}
+
+
+.back-button {
+
+    border: none;
+
+    padding:
+        11px
+        18px;
+
+    background:
+        rgba(255,255,255,0.12);
+
+    color: white;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    margin-bottom: 20px;
+}
+
+
+.back-button:hover {
+
+    background:
+        rgba(255,255,255,0.2);
+}
+
+
+/* =========================
+   EMPTY
+========================= */
+
+.empty {
+
+    text-align: center;
+
+    padding: 40px;
+
+    color: #ccc;
+
+    background:
+        rgba(255,255,255,0.08);
+
+    border-radius: 15px;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+
+    text-align: center;
+
+    padding:
+        50px
+        20px
+        30px;
+
+    color: #999;
+
+    font-size: 13px;
+}
+
+
+footer span {
+
+    color: #ff9d4d;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:600px) {
+
+    header {
+
+        padding-top: 45px;
+    }
+
+
+    .logo {
+
+        font-size: 38px;
+    }
+
+
+    .search-container {
+
+        flex-direction: column;
+    }
+
+
+    .search-container input {
+
+        padding: 15px;
+    }
+
+
+    .search-container button {
+
+        padding: 14px;
+    }
+
+
+    .recipe-header {
+
+        height: 330px;
+    }
+
+
+    .recipe-overlay {
+
+        padding: 25px;
+    }
+
+
+    .recipe-overlay h2 {
+
+        font-size: 30px;
+    }
+
+
+    .recipe-content {
+
+        padding: 22px;
+    }
+
+
+    .info {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
 
 </head>
 
+
 <body>
 
-    <div class="header">
 
-        <h1>🎓 ISTS College Chatbot</h1>
+<!-- =========================
+     BACKGROUND
+========================= -->
 
-        <p>
-            International School of Technology and Sciences for Women
-        </p>
+<div class="background">
+
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+
+    <div class="food food1">🍕</div>
+    <div class="food food2">🍔</div>
+    <div class="food food3">🍜</div>
+    <div class="food food4">🍛</div>
+    <div class="food food5">🥗</div>
+    <div class="food food6">🍰</div>
+
+</div>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="logo">
+        Food<span>ly</span> 🍽️
+    </div>
+
+    <div class="subtitle">
+
+        Discover delicious recipes
+        from around the world
 
     </div>
 
 
-    <div class="chat-container">
+    <div class="search-container">
 
-        <div class="chat-header">
-            🤖 ISTS Student Assistance Chatbot
-        </div>
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Search for biryani, pizza, pasta..."
+        >
 
-
-        <div id="chat">
-
-            <div class="message bot">
-
-                <b>Bot:</b>
-
-                Hello! 👋
-
-                Welcome to ISTS College Chatbot.
-
-                I can help you with:
-
-                • College Information
-                • B.Tech Courses
-                • CSE
-                • Admissions
-                • Academics
-                • Campus Facilities
-                • Hostel
-                • Placements
-                • Events
-                • Student Services
-                • Contact Information
-
-                Ask me a question!
-
-            </div>
-
-        </div>
-
-
-        <div class="quick-buttons">
-
-            <button onclick="quickQuestion('What courses are available at ISTS?')">
-                Courses
-            </button>
-
-            <button onclick="quickQuestion('Tell me about CSE')">
-                CSE
-            </button>
-
-            <button onclick="quickQuestion('Tell me about hostel facilities')">
-                Hostel
-            </button>
-
-            <button onclick="quickQuestion('Tell me about placements')">
-                Placements
-            </button>
-
-            <button onclick="quickQuestion('What facilities are available?')">
-                Facilities
-            </button>
-
-        </div>
-
-
-        <div class="input-area">
-
-            <input
-                type="text"
-                id="userInput"
-                placeholder="Type your question..."
-                onkeypress="handleEnter(event)"
-            >
-
-            <button onclick="sendMessage()">
-                Send
-            </button>
-
-        </div>
+        <button
+            onclick="searchFood()"
+        >
+            Search
+        </button>
 
     </div>
+
+</header>
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<div class="container">
+
+    <div id="status"></div>
+
+    <div id="suggestionArea"></div>
+
+    <div id="resultArea"></div>
+
+    <div
+        id="recipe"
+        class="recipe"
+    ></div>
+
+</div>
+
+
+<footer>
+
+    Powered by
+    <span>TheMealDB</span>
+
+</footer>
 
 
 <script>
 
 
-/* ---------------------------------------
-   SEND MESSAGE
---------------------------------------- */
+/* =========================
+   THEMEALDB API
+========================= */
 
-function sendMessage() {
+const MEAL_API =
+    "https://www.themealdb.com/api/json/v1/1";
 
-    let input = document.getElementById("userInput");
 
-    let message = input.value.trim();
+/* =========================
+   BEEF FILTER
+========================= */
 
-    if (message === "") {
+function isBeefFood(text) {
+
+    if (!text) return false;
+
+    text =
+        text.toLowerCase();
+
+
+    const beefWords = [
+
+        "beef",
+        "steak",
+        "ground beef",
+        "minced beef",
+        "beef mince",
+        "sirloin",
+        "ribeye",
+        "rib eye",
+        "t-bone",
+        "t bone",
+        "brisket",
+        "veal",
+        "cow"
+
+    ];
+
+
+    return beefWords.some(
+        word =>
+            text.includes(word)
+    );
+}
+
+
+/* =========================
+   GET INGREDIENTS
+========================= */
+
+function getMealIngredients(meal) {
+
+    let ingredients = [];
+
+
+    for (
+        let i = 1;
+        i <= 20;
+        i++
+    ) {
+
+        const ingredient =
+            meal[
+                `strIngredient${i}`
+            ];
+
+
+        const measure =
+            meal[
+                `strMeasure${i}`
+            ];
+
+
+        if (
+            ingredient &&
+            ingredient.trim()
+        ) {
+
+            ingredients.push(
+
+                ingredient +
+                " " +
+                (measure || "")
+
+            );
+        }
+    }
+
+
+    return ingredients.join(" ");
+}
+
+
+/* =========================
+   LEVENSHTEIN
+========================= */
+
+function levenshtein(a, b) {
+
+    a =
+        a.toLowerCase();
+
+    b =
+        b.toLowerCase();
+
+
+    const matrix = [];
+
+
+    for (
+        let i = 0;
+        i <= b.length;
+        i++
+    ) {
+
+        matrix[i] = [i];
+    }
+
+
+    for (
+        let j = 0;
+        j <= a.length;
+        j++
+    ) {
+
+        matrix[0][j] = j;
+    }
+
+
+    for (
+        let i = 1;
+        i <= b.length;
+        i++
+    ) {
+
+        for (
+            let j = 1;
+            j <= a.length;
+            j++
+        ) {
+
+            if (
+                b.charAt(i - 1) ===
+                a.charAt(j - 1)
+            ) {
+
+                matrix[i][j] =
+                    matrix[i - 1][j - 1];
+
+            } else {
+
+                matrix[i][j] =
+                    Math.min(
+
+                        matrix[i - 1][j - 1] + 1,
+
+                        matrix[i][j - 1] + 1,
+
+                        matrix[i - 1][j] + 1
+                    );
+            }
+        }
+    }
+
+
+    return matrix[b.length][a.length];
+}
+
+
+/* =========================
+   SEARCH
+========================= */
+
+async function searchFood() {
+
+    const query =
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .trim();
+
+
+    if (!query) {
+
+        alert(
+            "Please enter a food name."
+        );
+
         return;
     }
 
-    addMessage(message, "user");
 
-    let response = getBotResponse(message);
-
-    setTimeout(function() {
-
-        addMessage(response, "bot");
-
-    }, 300);
-
-    input.value = "";
-
-}
+    document.getElementById(
+        "resultArea"
+    ).innerHTML = "";
 
 
-/* ---------------------------------------
-   QUICK QUESTIONS
---------------------------------------- */
-
-function quickQuestion(question) {
-
-    document.getElementById("userInput").value = question;
-
-    sendMessage();
-
-}
+    document.getElementById(
+        "suggestionArea"
+    ).innerHTML = "";
 
 
-/* ---------------------------------------
-   ENTER KEY
---------------------------------------- */
+    document.getElementById(
+        "recipe"
+    ).style.display = "none";
 
-function handleEnter(event) {
 
-    if (event.key === "Enter") {
+    document.getElementById(
+        "status"
+    ).innerHTML =
+        `<div class="loader"></div>`;
 
-        sendMessage();
 
+    try {
+
+        const response =
+            await fetch(
+
+                `${MEAL_API}/search.php?s=` +
+                encodeURIComponent(query)
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        let meals =
+            data.meals || [];
+
+
+        /*
+           Remove beef-related recipes
+        */
+
+        meals =
+            meals.filter(meal => {
+
+                const text =
+
+                    meal.strMeal +
+                    " " +
+                    meal.strCategory +
+                    " " +
+                    meal.strArea +
+                    " " +
+                    getMealIngredients(meal);
+
+
+                return !isBeefFood(text);
+
+            });
+
+
+        if (meals.length === 0) {
+
+            document.getElementById(
+                "status"
+            ).innerHTML =
+                "No exact recipe found. Looking for similar recipes...";
+
+
+            await showSuggestions(query);
+
+            return;
+        }
+
+
+        document.getElementById(
+            "status"
+        ).innerHTML =
+            `Found ${meals.length} recipe(s)`;
+
+
+        displayResults(meals);
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        document.getElementById(
+            "status"
+        ).innerHTML =
+            "Unable to connect to TheMealDB.";
     }
-
 }
 
 
-/* ---------------------------------------
-   ADD MESSAGE
---------------------------------------- */
+/* =========================
+   DISPLAY RESULTS
+========================= */
 
-function addMessage(message, type) {
+function displayResults(meals) {
 
-    let chat = document.getElementById("chat");
-
-    let div = document.createElement("div");
-
-    div.classList.add("message");
-
-    div.classList.add(type);
-
-    if (type === "user") {
-
-        div.innerHTML = "<b>You:</b><br>" + message;
-
-    } else {
-
-        div.innerHTML = "<b>Bot:</b><br>" + message;
-
-    }
-
-    chat.appendChild(div);
-
-    chat.scrollTop = chat.scrollHeight;
-
-}
+    const area =
+        document.getElementById(
+            "resultArea"
+        );
 
 
-/* ---------------------------------------
-   CHATBOT RESPONSE
---------------------------------------- */
-
-function getBotResponse(input) {
-
-    let message = input.toLowerCase();
+    area.innerHTML =
+        `<h2 class="section-title">
+            Recipe Results
+        </h2>`;
 
 
-    /* GREETING */
+    const grid =
+        document.createElement(
+            "div"
+        );
 
-    if (
-        message.includes("hello") ||
-        message.includes("hi") ||
-        message.includes("hey")
-    ) {
 
-        return `
-        Hello! 👋<br><br>
-        Welcome to <b>ISTS College</b>.<br>
-        How can I help you?
+    grid.className =
+        "results";
+
+
+    meals.forEach(meal => {
+
+        const card =
+            document.createElement(
+                "div"
+            );
+
+
+        card.className =
+            "card";
+
+
+        card.innerHTML = `
+
+            <img
+                src="${meal.strMealThumb}"
+                alt="${escapeHTML(
+                    meal.strMeal
+                )}"
+            >
+
+            <div class="card-content">
+
+                <span class="source">
+                    TheMealDB
+                </span>
+
+                <h3>
+                    ${escapeHTML(
+                        meal.strMeal
+                    )}
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        meal.strArea ||
+                        "International"
+                    )}
+                </p>
+
+            </div>
         `;
 
+
+        /*
+           SAME PAGE
+           No new tab
+        */
+
+        card.onclick = () => {
+
+            showRecipe(
+                meal.idMeal
+            );
+
+        };
+
+
+        grid.appendChild(card);
+
+    });
+
+
+    area.appendChild(grid);
+}
+
+
+/* =========================
+   SUGGESTIONS
+========================= */
+
+async function showSuggestions(query) {
+
+    const area =
+        document.getElementById(
+            "suggestionArea"
+        );
+
+
+    area.innerHTML =
+        `<h2 class="section-title">
+            Did you mean?
+        </h2>`;
+
+
+    let suggestions = [];
+
+
+    try {
+
+        /*
+           TheMealDB provides a
+           first-letter search endpoint.
+        */
+
+        const firstLetter =
+            query
+                .charAt(0)
+                .toLowerCase();
+
+
+        const response =
+            await fetch(
+
+                `${MEAL_API}/search.php?f=${firstLetter}`
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (data.meals) {
+
+            data.meals.forEach(
+                meal => {
+
+                    const text =
+
+                        meal.strMeal +
+                        " " +
+                        getMealIngredients(
+                            meal
+                        );
+
+
+                    if (
+                        !isBeefFood(text)
+                    ) {
+
+                        suggestions.push({
+
+                            meal: meal,
+
+                            distance:
+                                levenshtein(
+                                    query,
+                                    meal.strMeal
+                                )
+
+                        });
+
+                    }
+
+                }
+            );
+        }
+
+
+    } catch (error) {
+
+        console.error(error);
     }
 
 
-    /* COLLEGE INFORMATION */
+    /*
+       Sort closest names first
+    */
+
+    suggestions.sort(
+        (a, b) =>
+            a.distance -
+            b.distance
+    );
+
+
+    const top =
+        suggestions.slice(0, 8);
+
+
+    if (top.length === 0) {
+
+        area.innerHTML = `
+
+            <div class="empty">
+
+                No similar recipes found.
+
+            </div>
+
+        `;
+
+
+        document.getElementById(
+            "status"
+        ).innerHTML = "";
+
+
+        return;
+    }
+
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+
+    wrapper.className =
+        "suggestions";
+
+
+    top.forEach(item => {
+
+        const meal =
+            item.meal;
+
+
+        const option =
+            document.createElement(
+                "div"
+            );
+
+
+        option.className =
+            "suggestion";
+
+
+        option.innerHTML = `
+
+            <div>
+
+                <div class="suggestion-name">
+
+                    ${escapeHTML(
+                        meal.strMeal
+                    )}
+
+                </div>
+
+                <div class="suggestion-source">
+
+                    TheMealDB ·
+                    ${escapeHTML(
+                        meal.strArea ||
+                        "International"
+                    )}
+
+                </div>
+
+            </div>
+
+            <div>
+                →
+            </div>
+
+        `;
+
+
+        /*
+           CLICK SUGGESTION
+           SAME PAGE
+        */
+
+        option.onclick = () => {
+
+            showRecipe(
+                meal.idMeal
+            );
+
+        };
+
+
+        wrapper.appendChild(
+            option
+        );
+
+    });
+
+
+    area.appendChild(
+        wrapper
+    );
+
+
+    document.getElementById(
+        "status"
+    ).innerHTML = "";
+}
+
+
+/* =========================
+   SHOW RECIPE
+========================= */
+
+async function showRecipe(id) {
+
+    const recipe =
+        document.getElementById(
+            "recipe"
+        );
+
+
+    recipe.style.display =
+        "block";
+
+
+    recipe.innerHTML =
+        `<div class="loader"></div>`;
+
+
+    recipe.scrollIntoView({
+        behavior: "smooth"
+    });
+
+
+    try {
+
+        const response =
+            await fetch(
+
+                `${MEAL_API}/lookup.php?i=${id}`
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.meals) {
+
+            recipe.innerHTML =
+                `<div class="empty">
+                    Recipe not found.
+                </div>`;
+
+            return;
+        }
+
+
+        const meal =
+            data.meals[0];
+
+
+        /*
+           Final beef check
+        */
+
+        const fullText =
+
+            meal.strMeal +
+            " " +
+            meal.strCategory +
+            " " +
+            meal.strArea +
+            " " +
+            getMealIngredients(meal) +
+            " " +
+            meal.strInstructions;
+
+
+        if (
+            isBeefFood(fullText)
+        ) {
+
+            recipe.innerHTML = `
+
+                <div class="empty">
+
+                    This beef-related recipe
+                    has been excluded.
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        /*
+           Ingredients
+        */
+
+        let ingredientsHTML =
+            "";
+
+
+        for (
+            let i = 1;
+            i <= 20;
+            i++
+        ) {
+
+            const ingredient =
+                meal[
+                    `strIngredient${i}`
+                ];
+
+
+            const measure =
+                meal[
+                    `strMeasure${i}`
+                ];
+
+
+            if (
+                ingredient &&
+                ingredient.trim()
+            ) {
+
+                ingredientsHTML += `
+
+                    <div class="ingredient">
+
+                        <strong>
+                            ${escapeHTML(
+                                ingredient
+                            )}
+                        </strong>
+
+                        <span>
+                            ${escapeHTML(
+                                measure || ""
+                            )}
+                        </span>
+
+                    </div>
+
+                `;
+            }
+        }
+
+
+        /*
+           Instructions
+        */
+
+        const instructions =
+            escapeHTML(
+                meal.strInstructions ||
+                "Instructions not available."
+            )
+            .replace(
+                /\n/g,
+                "<br><br>"
+            );
+
+
+        /*
+           Build recipe
+        */
+
+        recipe.innerHTML = `
+
+            <div class="recipe-header">
+
+                <img
+                    src="${meal.strMealThumb}"
+                    alt="${escapeHTML(
+                        meal.strMeal
+                    )}"
+                >
+
+                <div class="recipe-overlay">
+
+                    <h2>
+                        ${escapeHTML(
+                            meal.strMeal
+                        )}
+                    </h2>
+
+                    <p>
+
+                        ${escapeHTML(
+                            meal.strArea ||
+                            "International"
+                        )}
+
+                        ·
+
+                        ${escapeHTML(
+                            meal.strCategory ||
+                            "Recipe"
+                        )}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="recipe-content">
+
+                <button
+                    class="back-button"
+                    onclick="closeRecipe()"
+                >
+
+                    ← Back to recipes
+
+                </button>
+
+
+                <div class="info">
+
+                    <div class="info-box">
+
+                        <small>
+                            CUISINE
+                        </small>
+
+                        <strong>
+                            ${escapeHTML(
+                                meal.strArea ||
+                                "N/A"
+                            )}
+                        </strong>
+
+                    </div>
+
+
+                    <div class="info-box">
+
+                        <small>
+                            CATEGORY
+                        </small>
+
+                        <strong>
+                            ${escapeHTML(
+                                meal.strCategory ||
+                                "N/A"
+                            )}
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <h2>
+                    Ingredients
+                </h2>
+
+
+                <div class="ingredients">
+
+                    ${ingredientsHTML}
+
+                </div>
+
+
+                <h2>
+                    Cooking Instructions
+                </h2>
+
+
+                <div class="instructions">
+
+                    ${instructions}
+
+                </div>
+
+            </div>
+        `;
+
+
+        document.getElementById(
+            "status"
+        ).innerHTML = "";
+
+
+    } catch (error) {
+
+        console.error(error);
+
+
+        recipe.innerHTML = `
+
+            <div class="empty">
+
+                Unable to load recipe.
+
+            </div>
+
+        `;
+    }
+}
+
+
+/* =========================
+   CLOSE RECIPE
+========================= */
+
+function closeRecipe() {
+
+    const recipe =
+        document.getElementById(
+            "recipe"
+        );
+
+
+    recipe.style.display =
+        "none";
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+}
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(text) {
 
     if (
-        message.includes("college") &&
-        (
-            message.includes("name") ||
-            message.includes("about")
+        text === null ||
+        text === undefined
+    ) {
+
+        return "";
+    }
+
+
+    return String(text)
+
+        .replace(
+            /&/g,
+            "&amp;"
         )
-    ) {
 
-        return `
-        <b>College Name:</b><br>
-        International School of Technology and Sciences for Women<br><br>
-
-        <b>Short Name:</b> ISTS<br><br>
-
-        <b>Location:</b> Rajahmundry, Andhra Pradesh, India
-        `;
-
-    }
-
-
-    /* LOCATION */
-
-    if (
-        message.includes("location") ||
-        message.includes("located") ||
-        message.includes("where is")
-    ) {
-
-        return `
-        📍 <b>ISTS is located at:</b><br><br>
-
-        Rajahmundry, Andhra Pradesh, India.
-        `;
-
-    }
-
-
-    /* COURSES */
-
-    if (
-        message.includes("courses") ||
-        message.includes("b.tech courses") ||
-        message.includes("programs")
-    ) {
-
-        return `
-        <b>🎓 B.Tech Courses at ISTS:</b><br><br>
-
-        1. Computer Science and Engineering (CSE)<br>
-        2. CSE - Artificial Intelligence<br>
-        3. Artificial Intelligence and Machine Learning (AI & ML)<br>
-        4. CSE - Data Science<br>
-        5. CSE - Cyber Security<br>
-        6. Electronics and Communication Engineering (ECE)<br>
-        7. ECE - VLSI Design and Technology<br>
-        8. ECE - Advanced Communication Technology<br>
-        9. Agricultural Engineering<br><br>
-
-        <b>Other Programs:</b><br>
-        M.Tech, MBA, MCA, BCA, BBA<br><br>
-
-        <b>Diploma Programs:</b><br>
-        Diploma in CSE<br>
-        Diploma in CSE - Artificial Intelligence<br>
-        Diploma in ECE
-        `;
-
-    }
-
-
-    /* CSE */
-
-    if (
-        message.includes("cse") ||
-        message.includes("computer science")
-    ) {
-
-        return `
-        <b>💻 Computer Science and Engineering (CSE)</b><br><br>
-
-        <b>Degree:</b> B.Tech<br>
-        <b>Abbreviation:</b> CSE<br><br>
-
-        <b>Major areas include:</b><br>
-
-        • Programming<br>
-        • Data Structures<br>
-        • Algorithms<br>
-        • Database Management Systems<br>
-        • Operating Systems<br>
-        • Computer Networks<br>
-        • Web Development<br>
-        • Software Engineering<br>
-        • Artificial Intelligence<br>
-        • Machine Learning<br><br>
-
-        <b>CSE Specializations:</b><br>
-
-        • Artificial Intelligence<br>
-        • Data Science<br>
-        • Cyber Security
-        `;
-
-    }
-
-
-    /* AI */
-
-    if (
-        message.includes("artificial intelligence") ||
-        message.includes("ai")
-    ) {
-
-        return `
-        Yes. 🤖 ISTS offers programs related to
-        <b>Artificial Intelligence</b>.
-
-        These include:
-
-        • CSE - Artificial Intelligence
-        • Artificial Intelligence and Machine Learning (AI & ML)
-
-        AI is also associated with CSE as a major area.
-        `;
-
-    }
-
-
-    /* DATA SCIENCE */
-
-    if (
-        message.includes("data science")
-    ) {
-
-        return `
-        📊 Yes. ISTS offers:
-
-        <b>Computer Science and Engineering - Data Science</b>
-
-        Data Science is also listed as a CSE specialization.
-        `;
-
-    }
-
-
-    /* CYBER SECURITY */
-
-    if (
-        message.includes("cyber") ||
-        message.includes("cyber security")
-    ) {
-
-        return `
-        🔐 Yes. ISTS offers:
-
-        <b>Computer Science and Engineering - Cyber Security</b>
-
-        Cyber Security is also listed as a CSE specialization.
-        `;
-
-    }
-
-
-    /* ADMISSIONS */
-
-    if (
-        message.includes("admission") ||
-        message.includes("apply")
-    ) {
-
-        return `
-        📝 <b>Admissions</b><br><br>
-
-        ISTS offers admissions for undergraduate
-        and postgraduate programs.
-
-        B.Tech admissions follow the applicable
-        admission procedure.
-
-        Eligibility requirements can vary by course.
-
-        For current admission notifications,
-        eligibility, application procedure and
-        important dates, please check the official
-        ISTS website.
-        `;
-
-    }
-
-
-    /* ACADEMICS */
-
-    if (
-        message.includes("academic") ||
-        message.includes("syllabus") ||
-        message.includes("timetable") ||
-        message.includes("exam") ||
-        message.includes("results")
-    ) {
-
-        return `
-        📚 <b>Academic Information</b><br><br>
-
-        Academic information may include:
-
-        • Departments
-        • Courses
-        • Syllabus
-        • Academic Calendar
-        • Examinations
-        • Results
-        • Timetables
-        • Academic Regulations
-        • Student Academic Information
-        `;
-
-    }
-
-
-    /* FACILITIES */
-
-    if (
-        message.includes("facility") ||
-        message.includes("facilities") ||
-        message.includes("campus")
-    ) {
-
-        return `
-        🏫 <b>Campus Facilities</b><br><br>
-
-        ISTS chatbot information includes:
-
-        • Classrooms
-        • Laboratories
-        • Computer Labs
-        • Library
-        • Hostel
-        • Transportation
-        • Sports
-        • Cafeteria
-        • Internet / Wi-Fi
-        • Student Facilities
-        `;
-
-    }
-
-
-    /* LIBRARY */
-
-    if (
-        message.includes("library")
-    ) {
-
-        return `
-        📖 The ISTS campus facilities information
-        includes a <b>Library</b>.
-        `;
-
-    }
-
-
-    /* HOSTEL */
-
-    if (
-        message.includes("hostel")
-    ) {
-
-        return `
-        🏠 <b>Hostel Information</b><br><br>
-
-        The chatbot can provide information about:
-
-        • Hostel availability
-        • Hostel facilities
-        • Hostel application
-        • Hostel rules
-        • Hostel fees
-        • Food
-
-        <br>
-        ⚠️ Hostel fees, rules, room details and
-        availability can change. Please check the
-        latest official ISTS information for current details.
-        `;
-
-    }
-
-
-    /* TRANSPORT */
-
-    if (
-        message.includes("transport") ||
-        message.includes("transportation") ||
-        message.includes("bus")
-    ) {
-
-        return `
-        🚌 Transportation is included among
-        the campus facilities provided by ISTS.
-
-        For current routes, timings and availability,
-        please check the latest official information.
-        `;
-
-    }
-
-
-    /* PLACEMENTS */
-
-    if (
-        message.includes("placement") ||
-        message.includes("job") ||
-        message.includes("recruitment")
-    ) {
-
-        return `
-        💼 <b>Placement Information</b><br><br>
-
-        Placement-related topics include:
-
-        • Placement Cell
-        • Campus Recruitment
-        • Placement Training
-        • Career Guidance
-        • Internships
-        • Recruiters
-        • Placement Statistics
-        • Placement Process
-
-        <br>
-        For current placement statistics and
-        recruiter information, please check the
-        latest official ISTS information.
-        `;
-
-    }
-
-
-    /* INTERNSHIP */
-
-    if (
-        message.includes("internship")
-    ) {
-
-        return `
-        💼 Internships are included among the
-        placement-related topics of the ISTS chatbot.
-
-        For current internship opportunities,
-        please check the latest official information.
-        `;
-
-    }
-
-
-    /* EVENTS */
-
-    if (
-        message.includes("event") ||
-        message.includes("activities") ||
-        message.includes("workshop") ||
-        message.includes("seminar")
-    ) {
-
-        return `
-        🎉 <b>College Events and Activities</b><br><br>
-
-        ISTS may conduct:
-
-        • Technical Events
-        • Cultural Events
-        • Workshops
-        • Seminars
-        • Guest Lectures
-        • Student Clubs
-        • Competitions
-        • College Celebrations
-        `;
-
-    }
-
-
-    /* STUDENT SERVICES */
-
-    if (
-        message.includes("student service") ||
-        message.includes("student services") ||
-        message.includes("student login") ||
-        message.includes("certificate") ||
-        message.includes("notice")
-    ) {
-
-        return `
-        👨‍🎓 <b>Student Services</b><br><br>
-
-        • Student Login
-        • Examination Information
-        • Results
-        • Timetable
-        • Academic Calendar
-        • Notices
-        • Certificates
-        • Student Activities
-        `;
-
-    }
-
-
-    /* CONTACT */
-
-    if (
-        message.includes("contact") ||
-        message.includes("phone") ||
-        message.includes("email") ||
-        message.includes("address")
-    ) {
-
-        return `
-        📞 <b>Contact Information</b><br><br>
-
-        The chatbot provides information about:
-
-        • College Address
-        • Phone Number
-        • Email Address
-        • Admissions Contact
-        • Administration Contact
-        • College Location<br><br>
-
-        <b>Official Website:</b><br>
-
-        <a href="https://ists.ac.in/"
-           target="_blank">
-           https://ists.ac.in/
-        </a>
-        `;
-
-    }
-
-
-    /* WEBSITE */
-
-    if (
-        message.includes("website") ||
-        message.includes("official site") ||
-        message.includes("official website")
-    ) {
-
-        return `
-        🌐 <b>Official ISTS Website:</b><br><br>
-
-        <a href="https://ists.ac.in/"
-           target="_blank">
-           Visit ISTS Official Website
-        </a>
-        `;
-
-    }
-
-
-    /* THANK YOU */
-
-    if (
-        message.includes("thank") ||
-        message.includes("thanks")
-    ) {
-
-        return `
-        You're welcome! 😊<br><br>
-        Feel free to ask me anything about ISTS.
-        `;
-
-    }
-
-
-    /* BYE */
-
-    if (
-        message.includes("bye") ||
-        message.includes("goodbye")
-    ) {
-
-        return `
-        Goodbye! 👋<br><br>
-        Have a great day!
-        `;
-
-    }
-
-
-    /* DEFAULT RESPONSE */
-
-    return `
-    🤔 Sorry, I don't have that information
-    in my current ISTS knowledge base.
-
-    You can ask me about:
-
-    • Courses
-    • CSE
-    • Admissions
-    • Academics
-    • Facilities
-    • Hostel
-    • Placements
-    • Events
-    • Student Services
-    • Contact Information
-
-    You can also check the official website:
-    <br><br>
-
-    <a href="https://ists.ac.in/"
-       target="_blank">
-       https://ists.ac.in/
-    </a>
-    `;
-
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
 }
+
+
+/* =========================
+   ENTER KEY
+========================= */
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter"
+            ) {
+
+                searchFood();
+
+            }
+
+        }
+    );
 
 </script>
 
+
 </body>
+
 </html>
